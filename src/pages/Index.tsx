@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
@@ -13,97 +13,78 @@ import {
 } from 'recharts';
 
 const Index = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [recruitersCount, setRecruitersCount] = useState(5);
   const [avgSalary, setAvgSalary] = useState(80000);
 
-  const beforeAfterData = [
-    { label: 'Рутинных задач', before: 14, after: 1 },
-    { label: 'Релевантных кандидатов', before: 1, after: 6 },
-    { label: 'Потраченное время (ч)', before: 2, after: 0.2 },
+  const beforeAfterComparison = {
+    before: {
+      calls: 14,
+      clarifications: 9,
+      hours: 2,
+      relevant: 1
+    },
+    after: {
+      autoTests: 1,
+      responses: 12,
+      relevant: 6
+    }
+  };
+
+  const beforeAfterChartData = [
+    { metric: 'Действий', before: 23, after: 1 },
+    { metric: 'Релевантных', before: 1, after: 6 },
+    { metric: 'Время (ч)', before: 2, after: 0.1 }
+  ];
+
+  const keyBenefits = [
+    {
+      icon: 'Clock',
+      text: 'Экономит до 29 дней рутины в год на каждого рекрутера за счет автоматизации скрининга и брифинга'
+    },
+    {
+      icon: 'Zap',
+      text: 'Всего 7 минут, чтобы начать пользоваться системой'
+    },
+    {
+      icon: 'TrendingUp',
+      text: 'Сокращают срок закрытия вакансий на 30%'
+    },
+    {
+      icon: 'Shield',
+      text: 'Централизованная база и роли доступа защищают вашу клиентскую базу при смене сотрудников'
+    }
   ];
 
   const workflowSteps = [
     {
       number: 1,
-      title: 'Создание вакансии',
-      description: 'Система автоматически генерирует тест по описанию вакансии'
+      title: 'Вакансия',
+      description: 'Когда вы создаете вакансию, система сама делает тест по описанию'
     },
     {
       number: 2,
-      title: 'Отправка теста',
-      description: 'Просто отправьте ссылку на тест кандидату'
+      title: 'Тест',
+      description: 'Вы просто отправляете ссылку на тест кандидату'
     },
     {
       number: 3,
-      title: 'Прохождение теста',
-      description: 'Кандидат загружает резюме и отвечает на вопросы, адаптированные под его опыт'
+      title: 'Кандидат отвечает',
+      description: 'Кандидат сам загружает резюме и проходит короткий тест — вопросы подбираются под его резюме и вакансию'
     },
     {
       number: 4,
-      title: 'Автоматическая проверка',
-      description: 'ИИ проверяет ответы и сортирует кандидатов'
+      title: 'Система проверяет',
+      description: 'ReachPoint проверяет ответы кандидата на соответствие вакансии и сортирует в столбец (отказ/прошли тест). Все это без участия рекрутера'
     },
     {
       number: 5,
-      title: 'Готовый результат',
-      description: 'Получите список релевантных кандидатов с оценками и саммари'
+      title: 'Сортировка кандидатов готова',
+      description: 'В итоге у вас готовый список кандидатов, краткое саммари, результаты теста и оценка'
     },
     {
       number: 6,
-      title: 'Назначение интервью',
-      description: 'Остается только выбрать время для встречи'
-    }
-  ];
-
-  const benefits = [
-    {
-      icon: 'Clock',
-      value: '29 дней',
-      title: 'Экономия времени',
-      description: 'Экономит до 29 дней рутины в год на каждого рекрутера'
-    },
-    {
-      icon: 'Zap',
-      value: '7 минут',
-      title: 'Быстрый старт',
-      description: 'Всего 7 минут, чтобы начать пользоваться системой'
-    },
-    {
-      icon: 'TrendingUp',
-      value: '-30%',
-      title: 'Ускорение подбора',
-      description: 'Сокращают срок закрытия вакансий на 30%'
-    },
-    {
-      icon: 'Shield',
-      value: '100%',
-      title: 'Защита данных',
-      description: 'Централизованная база и роли доступа защищают клиентскую базу'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Анна Смирнова',
-      title: 'Руководитель отдела подбора',
-      company: 'HR Solutions',
-      logo: '🎯',
-      quote: 'ReachPoint полностью изменил наш процесс рекрутинга. Мы сократили время на скрининг в 3 раза и нашли действительно качественных кандидатов.'
-    },
-    {
-      name: 'Дмитрий Петров',
-      title: 'Основатель',
-      company: 'TechStaff Agency',
-      logo: '🚀',
-      quote: 'Динамические ИИ-тесты — это прорыв. Кандидаты проходят релевантную проверку, а мы получаем готовый анализ без лишней работы.'
-    },
-    {
-      name: 'Елена Волкова',
-      title: 'Директор по персоналу',
-      company: 'IT Recruiting Pro',
-      logo: '💼',
-      quote: 'Лучшая HRM для небольших агентств. Простая, понятная, и экономит реально много времени. Окупилась за первый месяц.'
+      title: 'Интервью',
+      description: 'Осталось только выбрать время для интервью'
     }
   ];
 
@@ -115,249 +96,253 @@ const Index = () => {
     return Math.round(totalSavings);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/20 to-white">
-      <header className="fixed top-0 w-full z-50 glass">
+    <div className="min-h-screen bg-white">
+      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold text-lg">
               R
             </div>
-            <span className="text-2xl font-heading font-bold text-foreground">ReachPoint</span>
+            <span className="text-2xl font-heading font-bold text-gray-900">ReachPoint</span>
           </div>
-          <Button variant="default" size="lg" className="hover:scale-105 transition-transform shadow-lg">
+          <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
             Получить демо
           </Button>
         </div>
       </header>
 
-      <section className="pt-32 pb-20 px-6">
-        <div className="container mx-auto">
-          <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-heading font-bold text-foreground leading-tight">
-              ReachPoint — самая удобная HRM
-              <span className="block text-primary mt-2">для рекрутинговых агентств</span>
-            </h1>
-            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Автоматизируйте скрининг и брифинг с помощью уникальной технологии динамических ИИ-тестов
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-              <Button size="lg" className="text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl">
-                <Icon name="Play" className="mr-2" size={20} />
-                Смотреть демо (4 мин)
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
-                Попробовать бесплатно
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 px-6 bg-white">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((benefit, idx) => (
-              <Card 
-                key={idx} 
-                className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-primary/30"
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-blue-50/50 to-white">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h1 className="text-5xl lg:text-6xl font-heading font-bold text-gray-900 leading-tight mb-6">
+            ReachPoint — самая удобная HRM
+            <br />
+            <span className="text-blue-600">для рекрутинговых агентств</span>
+          </h1>
+          
+          <div className="mt-12 space-y-4 max-w-3xl mx-auto">
+            {keyBenefits.map((benefit, idx) => (
+              <div 
+                key={idx}
+                className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-blue-600/20 rounded-2xl flex items-center justify-center mb-4">
-                  <Icon name={benefit.icon} className="text-primary" size={28} />
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon name={benefit.icon} className="text-blue-600" size={20} />
                 </div>
-                <div className="text-3xl font-bold text-primary mb-2">{benefit.value}</div>
-                <h3 className="text-lg font-heading font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
-              </Card>
+                <p className="text-left text-gray-700 leading-relaxed">{benefit.text}</p>
+              </div>
             ))}
           </div>
+
+          <div className="mt-12">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6">
+              <Icon name="Play" className="mr-2" size={20} />
+              Попробовать бесплатно
+            </Button>
+          </div>
         </div>
       </section>
 
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-white">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
-              До и После ReachPoint
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">
+              До и После
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Сравните старый процесс с автоматизированным подходом
-            </p>
           </div>
 
-          <Card className="p-8 glass-dark">
-            <div className="grid lg:grid-cols-2 gap-12 mb-8">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                    <Icon name="XCircle" className="text-red-600" size={24} />
-                  </div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground">До</h3>
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            <Card className="p-8 border-2 border-red-100 bg-red-50/30">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                  <Icon name="X" className="text-red-600" size={24} />
                 </div>
-                <div className="space-y-3 text-lg">
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 font-bold mt-1">•</span>
-                    <span>14 писем и звонков кандидатам</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 font-bold mt-1">•</span>
-                    <span>9 уточнений по требованиям</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 font-bold mt-1">•</span>
-                    <span>2 часа рутинной работы</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-red-600 font-bold mt-1">•</span>
-                    <span className="font-bold">Результат: 1 релевантный кандидат</span>
+                <h3 className="text-2xl font-heading font-bold text-gray-900">До</h3>
+              </div>
+              <div className="space-y-4 text-lg text-gray-700">
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">{beforeAfterComparison.before.calls}</span>
+                  <span>писем/звонков</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">{beforeAfterComparison.before.clarifications}</span>
+                  <span>уточнений</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">{beforeAfterComparison.before.hours} часа</span>
+                  <span>работы</span>
+                </div>
+                <div className="pt-4 border-t border-red-200">
+                  <div className="flex items-center gap-2">
+                    <Icon name="ArrowRight" className="text-red-600" size={20} />
+                    <span className="font-bold text-xl">{beforeAfterComparison.before.relevant} релевантный кандидат</span>
                   </div>
                 </div>
               </div>
+            </Card>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <Icon name="CheckCircle2" className="text-green-600" size={24} />
-                  </div>
-                  <h3 className="text-2xl font-heading font-bold text-foreground">После</h3>
+            <Card className="p-8 border-2 border-green-100 bg-green-50/30">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                  <Icon name="Check" className="text-green-600" size={24} />
                 </div>
-                <div className="space-y-3 text-lg">
-                  <div className="flex items-start gap-3">
-                    <span className="text-green-600 font-bold mt-1">•</span>
-                    <span>1 автоматический тест</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-green-600 font-bold mt-1">•</span>
-                    <span>12 ответов от кандидатов</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-green-600 font-bold mt-1">•</span>
-                    <span>Автоматическая проверка за минуты</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-green-600 font-bold mt-1">•</span>
-                    <span className="font-bold text-green-600">Результат: 6 релевантных кандидатов</span>
+                <h3 className="text-2xl font-heading font-bold text-gray-900">После</h3>
+              </div>
+              <div className="space-y-4 text-lg text-gray-700">
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">{beforeAfterComparison.after.autoTests}</span>
+                  <span>авто-тест</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">{beforeAfterComparison.after.responses}</span>
+                  <span>ответов от кандидатов</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="font-bold">Автоматическая</span>
+                  <span>проверка</span>
+                </div>
+                <div className="pt-4 border-t border-green-200">
+                  <div className="flex items-center gap-2">
+                    <Icon name="ArrowRight" className="text-green-600" size={20} />
+                    <span className="font-bold text-xl text-green-600">{beforeAfterComparison.after.relevant} релевантных кандидатов</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
+          </div>
 
+          <Card className="p-6 bg-gray-50">
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={beforeAfterData} layout="horizontal">
+              <BarChart data={beforeAfterChartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis type="number" stroke="#6b7280" />
-                <YAxis type="category" dataKey="label" stroke="#6b7280" width={180} />
+                <XAxis dataKey="metric" stroke="#6b7280" />
+                <YAxis stroke="#6b7280" />
                 <Tooltip 
-                  contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                  contentStyle={{ 
+                    background: 'white', 
+                    border: '1px solid #e5e7eb', 
+                    borderRadius: '8px' 
+                  }}
                 />
-                <Bar dataKey="before" fill="#ef4444" name="До" radius={[0, 8, 8, 0]} />
-                <Bar dataKey="after" fill="#22c55e" name="После" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="before" fill="#ef4444" name="До" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="after" fill="#22c55e" name="После" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Card>
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-gradient-to-br from-primary/5 to-blue-100/30">
-        <div className="container mx-auto max-w-5xl text-center space-y-6">
-          <div className="inline-block">
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-2xl text-xl font-bold shadow-lg">
-              🏆 Продукт года
-            </div>
+      <section className="py-20 px-6 bg-gradient-to-br from-yellow-50 to-orange-50">
+        <div className="container mx-auto max-w-4xl text-center">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-8 py-4 rounded-2xl text-2xl font-bold shadow-lg mb-8">
+            <span>🏆</span>
+            <span>Нас признали продуктом года</span>
           </div>
-          <h2 className="text-3xl font-heading font-bold text-foreground">
-            Нас признали продуктом года
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
             ReachPoint помогает агентствам выглядеть профессионально и работать предсказуемо 
             за счет прозрачности на каждом этапе воронки подбора и понятных базовых отчетов.
           </p>
         </div>
       </section>
 
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-white">
+        <div className="container mx-auto max-w-5xl text-center">
+          <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">
+            Посмотрите демо всего за 4 минуты
+          </h2>
+          <p className="text-xl text-gray-600 mb-12">
+            Чтобы понять насколько удобно пользоваться нашей системой
+          </p>
+          
+          <Card className="p-12 bg-gradient-to-br from-blue-50 to-blue-100/50 border-2 border-blue-200">
+            <div className="aspect-video bg-white rounded-xl shadow-lg flex items-center justify-center">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-xl px-10 py-8">
+                <Icon name="Play" className="mr-3" size={32} />
+                Смотреть видео (4 мин)
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-gray-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4">
-              Динамический тест-фильтр
+            <h2 className="text-4xl lg:text-5xl font-heading font-bold text-gray-900 mb-4">
+              Технология "Динамический тест-фильтр"
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Каждый рекрутер экономит до <span className="font-bold text-primary">29 рабочих дней в год</span> за счет этой технологии
+            <p className="text-xl text-gray-600">
+              Каждый рекрутер экономит до <span className="font-bold text-blue-600">29 рабочих дней в год</span>
             </p>
           </div>
 
-          <div className="mb-16">
-            <Card className="p-8 glass-dark text-center">
-              <h3 className="text-2xl font-heading font-bold mb-6">Как это работает</h3>
-              <p className="text-lg text-muted-foreground mb-8">
+          <div className="mb-12">
+            <Card className="p-8 bg-white text-center border-2 border-blue-100">
+              <h3 className="text-2xl font-heading font-bold mb-4">Как это работает</h3>
+              <p className="text-lg text-gray-600">
                 ReachPoint сам проверяет кандидатов и оставляет только релевантных
               </p>
             </Card>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {workflowSteps.map((step, idx) => (
-              <div key={idx} className="relative">
-                <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg flex-shrink-0">
-                      {step.number}
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-heading font-semibold text-lg">{step.title}</h4>
-                      <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
-                    </div>
+              <Card 
+                key={idx}
+                className="p-6 bg-white hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 border-gray-100 hover:border-blue-200"
+              >
+                <div className="flex flex-col h-full">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold text-2xl mb-4 shadow-lg">
+                    {step.number}
                   </div>
-                </Card>
-                {idx < workflowSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <Icon name="ArrowRight" className="text-primary" size={24} />
-                  </div>
-                )}
-              </div>
+                  <h4 className="font-heading font-bold text-xl mb-3 text-gray-900">{step.title}</h4>
+                  <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-white">
+      <section className="py-20 px-6 bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
+            <h2 className="text-4xl font-heading font-bold text-gray-900 mb-4">
               Узнайте, сколько денег ReachPoint вам сэкономит
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Калькулятор годовой экономии
+            <p className="text-xl text-gray-600">
+              уже в первый год работы
             </p>
           </div>
 
-          <Card className="p-8 glass-dark">
+          <Card className="p-10 bg-gradient-to-br from-blue-50 to-blue-100/50 border-2 border-blue-200">
             <div className="space-y-8">
               <div>
-                <label className="block text-sm font-medium mb-3">
-                  Количество рекрутеров в команде: <span className="text-primary font-bold text-xl">{recruitersCount}</span>
-                </label>
+                <div className="flex justify-between items-center mb-4">
+                  <label className="text-lg font-medium text-gray-700">
+                    Количество рекрутеров
+                  </label>
+                  <span className="text-3xl font-bold text-blue-600">{recruitersCount}</span>
+                </div>
                 <input 
                   type="range" 
                   min="1" 
                   max="20" 
                   value={recruitersCount}
                   onChange={(e) => setRecruitersCount(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                  className="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-3">
-                  Средняя зарплата рекрутера (₽/год): <span className="text-primary font-bold text-xl">{avgSalary.toLocaleString('ru-RU')}</span>
-                </label>
+                <div className="flex justify-between items-center mb-4">
+                  <label className="text-lg font-medium text-gray-700">
+                    Средняя зарплата (₽/год)
+                  </label>
+                  <span className="text-3xl font-bold text-blue-600">
+                    {avgSalary.toLocaleString('ru-RU')}
+                  </span>
+                </div>
                 <input 
                   type="range" 
                   min="50000" 
@@ -365,98 +350,50 @@ const Index = () => {
                   step="10000"
                   value={avgSalary}
                   onChange={(e) => setAvgSalary(Number(e.target.value))}
-                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                  className="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                 />
               </div>
 
-              <div className="pt-6 border-t-2 border-primary/20">
-                <div className="text-center space-y-4">
-                  <div className="text-muted-foreground text-lg">Ваша годовая экономия</div>
-                  <div className="text-5xl font-bold text-primary">
+              <div className="pt-8 border-t-2 border-blue-300">
+                <div className="bg-white rounded-2xl p-8 text-center shadow-lg">
+                  <div className="text-gray-600 text-lg mb-3">Экономия в год</div>
+                  <div className="text-6xl font-bold text-blue-600 mb-4">
                     {calculateSavings().toLocaleString('ru-RU')} ₽
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    Это {Math.round(calculateSavings() / avgSalary * 100)}% от годового фонда оплаты труда
+                  <div className="text-gray-500">
+                    Это {Math.round(calculateSavings() / (avgSalary * recruitersCount) * 100)}% от годового ФОТ
                   </div>
                 </div>
               </div>
 
-              <Button size="lg" className="w-full mt-6 py-6 text-lg">
-                Начать экономить прямо сейчас
+              <Button size="lg" className="w-full bg-blue-600 hover:bg-blue-700 text-xl py-7">
+                Начать экономить
               </Button>
             </div>
           </Card>
         </div>
       </section>
 
-      <section className="py-20 px-6">
-        <div className="container mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
-              Что говорят наши клиенты
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Реальные отзывы от рекрутинговых агентств
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <Card className="p-10 glass-dark">
-              <div className="text-center space-y-6">
-                <div className="text-7xl">{testimonials[activeTestimonial].logo}</div>
-                <blockquote className="text-2xl text-foreground leading-relaxed">
-                  "{testimonials[activeTestimonial].quote}"
-                </blockquote>
-                <div>
-                  <div className="font-heading font-bold text-xl">
-                    {testimonials[activeTestimonial].name}
-                  </div>
-                  <div className="text-muted-foreground text-lg">
-                    {testimonials[activeTestimonial].title}
-                  </div>
-                  <div className="text-primary font-semibold">
-                    {testimonials[activeTestimonial].company}
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <div className="flex justify-center gap-3 mt-8">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTestimonial(idx)}
-                  className={`h-3 rounded-full transition-all ${
-                    idx === activeTestimonial ? 'bg-primary w-12' : 'bg-gray-300 w-3'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 px-6 bg-gradient-to-br from-primary via-blue-600 to-blue-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto text-center max-w-3xl space-y-8 relative z-10">
-          <h2 className="text-4xl lg:text-5xl font-heading font-bold">
-            Готовы начать экономить 29 дней в год?
+      <section className="py-24 px-6 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+        <div className="container mx-auto text-center max-w-4xl">
+          <h2 className="text-4xl lg:text-5xl font-heading font-bold mb-6">
+            Готовы экономить 29 дней в год?
           </h2>
-          <p className="text-xl text-blue-100 leading-relaxed">
-            Всего 7 минут, чтобы настроить систему и начать автоматизировать подбор персонала уже сегодня
+          <p className="text-2xl text-blue-100 mb-10 leading-relaxed">
+            Всего 7 минут, чтобы настроить систему и начать работу
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl">
-              <Icon name="Play" className="mr-2" size={20} />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-white text-blue-600 hover:bg-gray-100 text-xl px-10 py-7"
+            >
+              <Icon name="Play" className="mr-2" size={24} />
               Посмотреть демо
             </Button>
             <Button 
               size="lg" 
-              className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl"
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-white/10 text-xl px-10 py-7"
             >
               Попробовать бесплатно
             </Button>
@@ -469,43 +406,43 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold">
                   R
                 </div>
                 <span className="text-xl font-heading font-bold text-white">ReachPoint</span>
               </div>
-              <p className="text-sm">HRM для рекрутинговых агентств</p>
+              <p className="text-sm text-gray-400">HRM для рекрутинговых агентств</p>
             </div>
             
             <div>
               <h4 className="font-heading font-semibold text-white mb-3">Продукт</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">Возможности</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Цены</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Интеграции</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Возможности</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Цены</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Интеграции</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-heading font-semibold text-white mb-3">Компания</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">О нас</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Блог</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Контакты</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">О нас</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Блог</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Контакты</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-heading font-semibold text-white mb-3">Поддержка</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">Документация</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Помощь</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Обучение</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Документация</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Помощь</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Обучение</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 pt-8 text-center text-sm">
+          <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
             <p>&copy; 2024 ReachPoint. Все права защищены.</p>
           </div>
         </div>
