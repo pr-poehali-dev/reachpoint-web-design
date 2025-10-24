@@ -3,222 +3,178 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { 
-  LineChart, 
-  Line, 
   BarChart, 
   Bar, 
-  PieChart, 
-  Pie, 
-  Cell,
   XAxis, 
   YAxis, 
   CartesianGrid, 
   Tooltip, 
-  ResponsiveContainer,
-  Legend
+  ResponsiveContainer
 } from 'recharts';
 
 const Index = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [recruitersCount, setRecruitersCount] = useState(5);
+  const [avgSalary, setAvgSalary] = useState(80000);
 
-  const salesFunnelData = [
-    { stage: 'Visitors', value: 10000, conversion: 100 },
-    { stage: 'Leads', value: 3500, conversion: 35 },
-    { stage: 'Qualified', value: 1200, conversion: 12 },
-    { stage: 'Customers', value: 420, conversion: 4.2 },
+  const beforeAfterData = [
+    { label: 'Рутинных задач', before: 14, after: 1 },
+    { label: 'Релевантных кандидатов', before: 1, after: 6 },
+    { label: 'Потраченное время (ч)', before: 2, after: 0.2 },
   ];
 
-  const revenueData = [
-    { month: 'Jan', revenue: 45000, growth: 12 },
-    { month: 'Feb', revenue: 52000, growth: 15.5 },
-    { month: 'Mar', revenue: 61000, growth: 17.3 },
-    { month: 'Apr', revenue: 71000, growth: 16.4 },
-    { month: 'May', revenue: 85000, growth: 19.7 },
-    { month: 'Jun', revenue: 98000, growth: 15.3 },
-  ];
-
-  const trafficSourceData = [
-    { name: 'Organic', value: 4200, color: '#3B82F6' },
-    { name: 'Direct', value: 2800, color: '#10B981' },
-    { name: 'Referral', value: 1500, color: '#F59E0B' },
-    { name: 'Social', value: 1200, color: '#8B5CF6' },
-  ];
-
-  const engagementData = [
-    { metric: 'Sessions', value: 95, trend: 'up' },
-    { metric: 'Avg Duration', value: 82, trend: 'up' },
-    { metric: 'Bounce Rate', value: 34, trend: 'down' },
-    { metric: 'Retention', value: 78, trend: 'up' },
-  ];
-
-  const features = [
+  const workflowSteps = [
     {
-      icon: 'TrendingUp',
-      title: 'Sales Funnel Analytics',
-      description: 'Track every stage of your sales funnel with precision. Identify bottlenecks and optimize conversion rates with real-time data visualization.',
-      image: 'funnel'
+      number: 1,
+      title: 'Создание вакансии',
+      description: 'Система автоматически генерирует тест по описанию вакансии'
     },
     {
-      icon: 'BarChart3',
-      title: 'Revenue Growth Tracking',
-      description: 'Monitor your revenue streams across multiple channels. Get actionable insights into what drives your business growth.',
-      image: 'revenue'
+      number: 2,
+      title: 'Отправка теста',
+      description: 'Просто отправьте ссылку на тест кандидату'
     },
     {
-      icon: 'Users',
-      title: 'User Behavior Intelligence',
-      description: 'Understand how users interact with your product. Track engagement, retention, and identify power users automatically.',
-      image: 'engagement'
+      number: 3,
+      title: 'Прохождение теста',
+      description: 'Кандидат загружает резюме и отвечает на вопросы, адаптированные под его опыт'
     },
+    {
+      number: 4,
+      title: 'Автоматическая проверка',
+      description: 'ИИ проверяет ответы и сортирует кандидатов'
+    },
+    {
+      number: 5,
+      title: 'Готовый результат',
+      description: 'Получите список релевантных кандидатов с оценками и саммари'
+    },
+    {
+      number: 6,
+      title: 'Назначение интервью',
+      description: 'Остается только выбрать время для встречи'
+    }
   ];
 
   const benefits = [
     {
+      icon: 'Clock',
+      value: '29 дней',
+      title: 'Экономия времени',
+      description: 'Экономит до 29 дней рутины в год на каждого рекрутера'
+    },
+    {
       icon: 'Zap',
-      title: 'Real-Time Insights',
-      description: 'Access live analytics dashboards that update instantly as your business grows'
+      value: '7 минут',
+      title: 'Быстрый старт',
+      description: 'Всего 7 минут, чтобы начать пользоваться системой'
     },
     {
-      icon: 'Target',
-      title: 'Data-Driven Decisions',
-      description: 'Make confident strategic choices backed by comprehensive analytics and forecasting'
+      icon: 'TrendingUp',
+      value: '-30%',
+      title: 'Ускорение подбора',
+      description: 'Сокращают срок закрытия вакансий на 30%'
     },
     {
-      icon: 'Sparkles',
-      title: 'Automated Reports',
-      description: 'Get beautiful, actionable reports delivered to your inbox automatically'
+      icon: 'Shield',
+      value: '100%',
+      title: 'Защита данных',
+      description: 'Централизованная база и роли доступа защищают клиентскую базу'
     }
   ];
 
   const testimonials = [
     {
-      name: 'Sarah Chen',
-      title: 'VP of Growth',
-      company: 'TechFlow Inc.',
+      name: 'Анна Смирнова',
+      title: 'Руководитель отдела подбора',
+      company: 'HR Solutions',
+      logo: '🎯',
+      quote: 'ReachPoint полностью изменил наш процесс рекрутинга. Мы сократили время на скрининг в 3 раза и нашли действительно качественных кандидатов.'
+    },
+    {
+      name: 'Дмитрий Петров',
+      title: 'Основатель',
+      company: 'TechStaff Agency',
       logo: '🚀',
-      quote: 'Reachpoint.ai transformed how we understand our customers. Conversion rates increased by 34% in just 3 months.'
+      quote: 'Динамические ИИ-тесты — это прорыв. Кандидаты проходят релевантную проверку, а мы получаем готовый анализ без лишней работы.'
     },
     {
-      name: 'Michael Rodriguez',
-      title: 'Head of Analytics',
-      company: 'DataScale Solutions',
-      logo: '📊',
-      quote: 'The real-time insights helped us identify and fix critical funnel issues we didn\'t even know existed.'
-    },
-    {
-      name: 'Emma Thompson',
-      title: 'CEO',
-      company: 'GrowthLabs',
-      logo: '💡',
-      quote: 'Best analytics platform we\'ve used. The ROI was evident within the first month of implementation.'
+      name: 'Елена Волкова',
+      title: 'Директор по персоналу',
+      company: 'IT Recruiting Pro',
+      logo: '💼',
+      quote: 'Лучшая HRM для небольших агентств. Простая, понятная, и экономит реально много времени. Окупилась за первый месяц.'
     }
   ];
 
-  const clientLogos = ['🏢', '🏭', '🏪', '🏛️', '🏬', '🏦'];
+  const calculateSavings = () => {
+    const daysPerRecruiter = 29;
+    const workDaysPerYear = 250;
+    const dailySalary = avgSalary / workDaysPerYear;
+    const totalSavings = recruitersCount * daysPerRecruiter * dailySalary;
+    return Math.round(totalSavings);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/30 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-white via-blue-50/20 to-white">
       <header className="fixed top-0 w-full z-50 glass">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">R</div>
-            <span className="text-xl font-heading font-bold text-foreground">Reachpoint.ai</span>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+              R
+            </div>
+            <span className="text-2xl font-heading font-bold text-foreground">ReachPoint</span>
           </div>
-          <Button variant="default" className="hover:scale-105 transition-transform">
-            Request Demo
+          <Button variant="default" size="lg" className="hover:scale-105 transition-transform shadow-lg">
+            Получить демо
           </Button>
         </div>
       </header>
 
       <section className="pt-32 pb-20 px-6">
         <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 animate-fade-in">
-              <h1 className="text-5xl lg:text-6xl font-heading font-bold text-foreground leading-tight">
-                Analytics Platform for
-                <span className="text-primary"> Data-Driven</span> Decisions
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Transform raw data into actionable insights. Track sales funnels, revenue growth, and user behavior in real-time with enterprise-grade analytics.
-              </p>
-              <div className="flex gap-4 pt-4">
-                <Button size="lg" className="hover:scale-105 transition-transform">
-                  <Icon name="Play" className="mr-2" size={18} />
-                  Request Demo
-                </Button>
-                <Button size="lg" variant="outline" className="hover:scale-105 transition-transform">
-                  Learn More
-                </Button>
-              </div>
+          <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
+            <h1 className="text-5xl lg:text-6xl font-heading font-bold text-foreground leading-tight">
+              ReachPoint — самая удобная HRM
+              <span className="block text-primary mt-2">для рекрутинговых агентств</span>
+            </h1>
+            <p className="text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Автоматизируйте скрининг и брифинг с помощью уникальной технологии динамических ИИ-тестов
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+              <Button size="lg" className="text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl">
+                <Icon name="Play" className="mr-2" size={20} />
+                Смотреть демо (4 мин)
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
+                Попробовать бесплатно
+              </Button>
             </div>
-
-            <Card className="p-6 glass-dark animate-scale-in">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-heading font-semibold text-lg">Sales Funnel Overview</h3>
-                  <div className="flex gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-xs text-muted-foreground">Live</span>
-                  </div>
-                </div>
-                
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={salesFunnelData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="stage" stroke="#6b7280" fontSize={12} />
-                    <YAxis stroke="#6b7280" fontSize={12} />
-                    <Tooltip 
-                      contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                    />
-                    <Bar dataKey="value" fill="#3B82F6" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-
-                <div className="grid grid-cols-2 gap-4 pt-2">
-                  <div className="glass p-3 rounded-lg">
-                    <div className="text-2xl font-bold text-primary">4.2%</div>
-                    <div className="text-xs text-muted-foreground">Conversion Rate</div>
-                  </div>
-                  <div className="glass p-3 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">+18.3%</div>
-                    <div className="text-xs text-muted-foreground">vs Last Month</div>
-                  </div>
-                </div>
-              </div>
-            </Card>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-white">
+      <section className="py-16 px-6 bg-white">
         <div className="container mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
-              Why Choose Reachpoint.ai
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Powerful analytics capabilities designed for modern B2B SaaS companies
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, idx) => (
               <Card 
                 key={idx} 
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20"
+                className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-transparent hover:border-primary/30"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                  <Icon name={benefit.icon} className="text-primary" size={24} />
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-blue-600/20 rounded-2xl flex items-center justify-center mb-4">
+                  <Icon name={benefit.icon} className="text-primary" size={28} />
                 </div>
-                <h3 className="text-xl font-heading font-semibold mb-2">{benefit.title}</h3>
-                <p className="text-muted-foreground">{benefit.description}</p>
+                <div className="text-3xl font-bold text-primary mb-2">{benefit.value}</div>
+                <h3 className="text-lg font-heading font-semibold mb-2">{benefit.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{benefit.description}</p>
               </Card>
             ))}
           </div>
@@ -226,216 +182,283 @@ const Index = () => {
       </section>
 
       <section className="py-20 px-6">
-        <div className="container mx-auto space-y-32">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Card className="p-8 glass-dark order-2 lg:order-1">
-              <h4 className="font-heading font-semibold mb-4">Revenue Analytics</h4>
-              <ResponsiveContainer width="100%" height={280}>
-                <LineChart data={revenueData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="month" stroke="#6b7280" />
-                  <YAxis stroke="#6b7280" />
-                  <Tooltip 
-                    contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                  />
-                  <Legend />
-                  <Line type="monotone" dataKey="revenue" stroke="#3B82F6" strokeWidth={3} dot={{ fill: '#3B82F6', r: 5 }} />
-                  <Line type="monotone" dataKey="growth" stroke="#10B981" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </Card>
-
-            <div className="space-y-4 order-1 lg:order-2">
-              <Icon name={features[1].icon} className="text-primary" size={40} />
-              <h2 className="text-3xl font-heading font-bold">{features[1].title}</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {features[1].description}
-              </p>
-              <ul className="space-y-3 pt-4">
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Multi-channel revenue tracking across all platforms</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Predictive forecasting with AI-powered models</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Custom dashboards for every stakeholder</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-4">
-              <Icon name={features[0].icon} className="text-primary" size={40} />
-              <h2 className="text-3xl font-heading font-bold">{features[0].title}</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {features[0].description}
-              </p>
-              <div className="grid grid-cols-2 gap-4 pt-4">
-                <div className="glass p-4 rounded-lg">
-                  <div className="text-3xl font-bold text-primary">3.2x</div>
-                  <div className="text-sm text-muted-foreground">Better Conversion</div>
-                </div>
-                <div className="glass p-4 rounded-lg">
-                  <div className="text-3xl font-bold text-green-600">-42%</div>
-                  <div className="text-sm text-muted-foreground">Drop-off Rate</div>
-                </div>
-              </div>
-            </div>
-
-            <Card className="p-8 glass-dark">
-              <h4 className="font-heading font-semibold mb-4">Traffic Sources</h4>
-              <ResponsiveContainer width="100%" height={280}>
-                <PieChart>
-                  <Pie
-                    data={trafficSourceData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {trafficSourceData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </Card>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Card className="p-8 glass-dark order-2 lg:order-1">
-              <h4 className="font-heading font-semibold mb-6">User Engagement Metrics</h4>
-              <div className="space-y-4">
-                {engagementData.map((item, idx) => (
-                  <div key={idx} className="glass p-4 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">{item.metric}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold">{item.value}%</span>
-                        <Icon 
-                          name={item.trend === 'up' ? 'TrendingUp' : 'TrendingDown'} 
-                          className={item.trend === 'up' ? 'text-green-600' : 'text-red-600'} 
-                          size={20} 
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full ${item.trend === 'up' ? 'bg-green-600' : 'bg-red-600'}`}
-                        style={{ width: `${item.value}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <div className="space-y-4 order-1 lg:order-2">
-              <Icon name={features[2].icon} className="text-primary" size={40} />
-              <h2 className="text-3xl font-heading font-bold">{features[2].title}</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {features[2].description}
-              </p>
-              <ul className="space-y-3 pt-4">
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Session recordings and heatmaps</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Cohort analysis and retention tracking</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Icon name="Check" className="text-green-600 mt-1" size={20} />
-                  <span>Behavioral segmentation with AI</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-white">
-        <div className="container mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
-              Trusted by Industry Leaders
+              До и После ReachPoint
             </h2>
-            <p className="text-lg text-muted-foreground">
-              See what our customers say about their experience
+            <p className="text-xl text-muted-foreground">
+              Сравните старый процесс с автоматизированным подходом
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <Card className="p-8 glass-dark">
-              <div className="text-center space-y-6">
-                <div className="text-6xl">{testimonials[activeTestimonial].logo}</div>
-                <blockquote className="text-xl text-foreground italic leading-relaxed">
-                  "{testimonials[activeTestimonial].quote}"
-                </blockquote>
-                <div>
-                  <div className="font-heading font-semibold text-lg">
-                    {testimonials[activeTestimonial].name}
+          <Card className="p-8 glass-dark">
+            <div className="grid lg:grid-cols-2 gap-12 mb-8">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <Icon name="XCircle" className="text-red-600" size={24} />
                   </div>
-                  <div className="text-muted-foreground">
-                    {testimonials[activeTestimonial].title} at {testimonials[activeTestimonial].company}
+                  <h3 className="text-2xl font-heading font-bold text-foreground">До</h3>
+                </div>
+                <div className="space-y-3 text-lg">
+                  <div className="flex items-start gap-3">
+                    <span className="text-red-600 font-bold mt-1">•</span>
+                    <span>14 писем и звонков кандидатам</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-red-600 font-bold mt-1">•</span>
+                    <span>9 уточнений по требованиям</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-red-600 font-bold mt-1">•</span>
+                    <span>2 часа рутинной работы</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-red-600 font-bold mt-1">•</span>
+                    <span className="font-bold">Результат: 1 релевантный кандидат</span>
                   </div>
                 </div>
               </div>
-            </Card>
 
-            <div className="flex justify-center gap-2 mt-8">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTestimonial(idx)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    idx === activeTestimonial ? 'bg-primary w-8' : 'bg-gray-300'
-                  }`}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <Icon name="CheckCircle2" className="text-green-600" size={24} />
+                  </div>
+                  <h3 className="text-2xl font-heading font-bold text-foreground">После</h3>
+                </div>
+                <div className="space-y-3 text-lg">
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-1">•</span>
+                    <span>1 автоматический тест</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-1">•</span>
+                    <span>12 ответов от кандидатов</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-1">•</span>
+                    <span>Автоматическая проверка за минуты</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold mt-1">•</span>
+                    <span className="font-bold text-green-600">Результат: 6 релевантных кандидатов</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={beforeAfterData} layout="horizontal">
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <XAxis type="number" stroke="#6b7280" />
+                <YAxis type="category" dataKey="label" stroke="#6b7280" width={180} />
+                <Tooltip 
+                  contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 />
-              ))}
+                <Bar dataKey="before" fill="#ef4444" name="До" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="after" fill="#22c55e" name="После" radius={[0, 8, 8, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </div>
+      </section>
+
+      <section className="py-20 px-6 bg-gradient-to-br from-primary/5 to-blue-100/30">
+        <div className="container mx-auto max-w-5xl text-center space-y-6">
+          <div className="inline-block">
+            <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-2xl text-xl font-bold shadow-lg">
+              🏆 Продукт года
             </div>
           </div>
+          <h2 className="text-3xl font-heading font-bold text-foreground">
+            Нас признали продуктом года
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            ReachPoint помогает агентствам выглядеть профессионально и работать предсказуемо 
+            за счет прозрачности на каждом этапе воронки подбора и понятных базовых отчетов.
+          </p>
+        </div>
+      </section>
 
-          <div className="flex justify-center gap-8 mt-16 flex-wrap">
-            {clientLogos.map((logo, idx) => (
-              <div key={idx} className="text-4xl opacity-60 hover:opacity-100 transition-opacity">
-                {logo}
+      <section className="py-20 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4">
+              Динамический тест-фильтр
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Каждый рекрутер экономит до <span className="font-bold text-primary">29 рабочих дней в год</span> за счет этой технологии
+            </p>
+          </div>
+
+          <div className="mb-16">
+            <Card className="p-8 glass-dark text-center">
+              <h3 className="text-2xl font-heading font-bold mb-6">Как это работает</h3>
+              <p className="text-lg text-muted-foreground mb-8">
+                ReachPoint сам проверяет кандидатов и оставляет только релевантных
+              </p>
+            </Card>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {workflowSteps.map((step, idx) => (
+              <div key={idx} className="relative">
+                <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg flex-shrink-0">
+                      {step.number}
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="font-heading font-semibold text-lg">{step.title}</h4>
+                      <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                    </div>
+                  </div>
+                </Card>
+                {idx < workflowSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                    <Icon name="ArrowRight" className="text-primary" size={24} />
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-24 px-6 bg-gradient-to-br from-primary via-blue-600 to-blue-700 text-white">
-        <div className="container mx-auto text-center max-w-3xl space-y-8">
+      <section className="py-20 px-6 bg-gradient-to-br from-blue-50 to-white">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
+              Узнайте, сколько денег ReachPoint вам сэкономит
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Калькулятор годовой экономии
+            </p>
+          </div>
+
+          <Card className="p-8 glass-dark">
+            <div className="space-y-8">
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Количество рекрутеров в команде: <span className="text-primary font-bold text-xl">{recruitersCount}</span>
+                </label>
+                <input 
+                  type="range" 
+                  min="1" 
+                  max="20" 
+                  value={recruitersCount}
+                  onChange={(e) => setRecruitersCount(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-3">
+                  Средняя зарплата рекрутера (₽/год): <span className="text-primary font-bold text-xl">{avgSalary.toLocaleString('ru-RU')}</span>
+                </label>
+                <input 
+                  type="range" 
+                  min="50000" 
+                  max="200000" 
+                  step="10000"
+                  value={avgSalary}
+                  onChange={(e) => setAvgSalary(Number(e.target.value))}
+                  className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
+                />
+              </div>
+
+              <div className="pt-6 border-t-2 border-primary/20">
+                <div className="text-center space-y-4">
+                  <div className="text-muted-foreground text-lg">Ваша годовая экономия</div>
+                  <div className="text-5xl font-bold text-primary">
+                    {calculateSavings().toLocaleString('ru-RU')} ₽
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Это {Math.round(calculateSavings() / avgSalary * 100)}% от годового фонда оплаты труда
+                  </div>
+                </div>
+              </div>
+
+              <Button size="lg" className="w-full mt-6 py-6 text-lg">
+                Начать экономить прямо сейчас
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      <section className="py-20 px-6">
+        <div className="container mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-4xl font-heading font-bold text-foreground mb-4">
+              Что говорят наши клиенты
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Реальные отзывы от рекрутинговых агентств
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Card className="p-10 glass-dark">
+              <div className="text-center space-y-6">
+                <div className="text-7xl">{testimonials[activeTestimonial].logo}</div>
+                <blockquote className="text-2xl text-foreground leading-relaxed">
+                  "{testimonials[activeTestimonial].quote}"
+                </blockquote>
+                <div>
+                  <div className="font-heading font-bold text-xl">
+                    {testimonials[activeTestimonial].name}
+                  </div>
+                  <div className="text-muted-foreground text-lg">
+                    {testimonials[activeTestimonial].title}
+                  </div>
+                  <div className="text-primary font-semibold">
+                    {testimonials[activeTestimonial].company}
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            <div className="flex justify-center gap-3 mt-8">
+              {testimonials.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveTestimonial(idx)}
+                  className={`h-3 rounded-full transition-all ${
+                    idx === activeTestimonial ? 'bg-primary w-12' : 'bg-gray-300 w-3'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 px-6 bg-gradient-to-br from-primary via-blue-600 to-blue-700 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto text-center max-w-3xl space-y-8 relative z-10">
           <h2 className="text-4xl lg:text-5xl font-heading font-bold">
-            Ready to Transform Your Analytics?
+            Готовы начать экономить 29 дней в год?
           </h2>
           <p className="text-xl text-blue-100 leading-relaxed">
-            Join hundreds of companies making data-driven decisions with Reachpoint.ai. 
-            Get started with a personalized demo today.
+            Всего 7 минут, чтобы настроить систему и начать автоматизировать подбор персонала уже сегодня
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button size="lg" variant="secondary" className="hover:scale-105 transition-transform">
-              <Icon name="Calendar" className="mr-2" size={18} />
-              Request Demo
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl">
+              <Icon name="Play" className="mr-2" size={20} />
+              Посмотреть демо
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary hover:scale-105 transition-all"
+              className="bg-white text-primary hover:bg-gray-100 text-lg px-8 py-6 hover:scale-105 transition-transform shadow-xl"
             >
-              Contact Sales
+              Попробовать бесплатно
             </Button>
           </div>
         </div>
@@ -443,45 +466,47 @@ const Index = () => {
 
       <footer className="py-12 px-6 bg-gray-900 text-gray-300">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-bold">R</div>
-                <span className="text-lg font-heading font-bold text-white">Reachpoint.ai</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                  R
+                </div>
+                <span className="text-xl font-heading font-bold text-white">ReachPoint</span>
               </div>
-              <p className="text-sm">Enterprise analytics for modern teams</p>
+              <p className="text-sm">HRM для рекрутинговых агентств</p>
             </div>
             
             <div>
-              <h4 className="font-heading font-semibold text-white mb-3">Product</h4>
+              <h4 className="font-heading font-semibold text-white mb-3">Продукт</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Integrations</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Возможности</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Цены</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Интеграции</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-heading font-semibold text-white mb-3">Company</h4>
+              <h4 className="font-heading font-semibold text-white mb-3">Компания</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">О нас</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Блог</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Контакты</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-heading font-semibold text-white mb-3">Resources</h4>
+              <h4 className="font-heading font-semibold text-white mb-3">Поддержка</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-primary transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Support</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Документация</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Помощь</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Обучение</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            <p>&copy; 2024 Reachpoint.ai. All rights reserved.</p>
+          <div className="border-t border-gray-800 pt-8 text-center text-sm">
+            <p>&copy; 2024 ReachPoint. Все права защищены.</p>
           </div>
         </div>
       </footer>
